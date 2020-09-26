@@ -49,8 +49,86 @@ study-app
 ## データベース設計
 https://gyazo.com/8d8a78b253c680f3dab3f42f518bcf00
 
+# テーブル設計
 
+## students テーブル
 
+| Column       | Type    | Options     |
+| ------------ | ------- | ----------- |
+| nickname     | string  | null: false |
+| family_name  | string  | null: false |
+| first_name   | string  | null: false |
+| email        | string  | null: false |
+| password     | string  | null: false |
+| birth        | date    | null: false |
+| nationality  | integer | null: false |
+| image        | string  |             |
+
+### Association 
+
+- has_many :room_students
+- has_many :rooms, through :room_students
+- has_many :messages
+
+## teachers テーブル
+
+| Column       | Type    | Options     |
+| ------------ | ------- | ----------- |
+| nickname     | string  | null: false |
+| family_name  | string  | null: false |
+| first_name   | string  | null: false |
+| email        | string  | null: false |
+| password     | string  | null: false |
+| birth        | date    | null: false |
+| nationality  | integer | null: false |
+| image        | string  |             |
+
+### Association
+
+- has_many :room_teachers
+- has_many :rooms, through :room_teachers
+- has_many :messages
+- has_many :videos
+
+## rooms テーブル
+
+| Column       | Type    | Options     |
+| ------------ | ------- | ----------- |
+| name         | string  | null: false |
+
+### Association
+
+- has_many :room_teachers
+- has_many :teachers, through :room_teachers
+- has_many :room_students
+- has_many :rooms, through :room_students
+- has_many :messages
+
+## videos テーブル
+
+| Column       | Type       | Options                        |
+| ------------ | ---------- | ------------------------------ |
+| video        | string     | null: false                    |
+| teacher      | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :teacher
+
+## messages テーブル
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| content | string     |                                |
+| teacher | references | null: false, foreign_key: true |
+| student | references | null: false, foreign_key: true |
+| room    | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :teacher
+- belongs_to :student
+- belongs_to :room
 
 
 
